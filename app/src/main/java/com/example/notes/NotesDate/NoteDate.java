@@ -1,6 +1,5 @@
 package com.example.notes.NotesDate;
 
-import android.icu.util.IndianCalendar;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

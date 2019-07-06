@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -16,6 +17,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+
+import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -51,22 +54,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void login() {
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
-        progressDialog.setMessage("Signing in. Please wait...");
-        progressDialog.show();
-        firebaseAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        progressDialog.dismiss();
-                        if (task.isSuccessful()) {
-                            //we will start notes activity here
-                            finish();
-                            startActivity(new Intent(MainActivity.this, NotesActivity.class));
-                        } else {
-                            Toast.makeText(MainActivity.this, "Could not sign in. Please check your email and password.", Toast.LENGTH_SHORT).show();
+        if(TextUtils.isEmpty(email) && TextUtils.isEmpty(password)){
+            Toast.makeText(MainActivity.this, "Enter email and password to sign in", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(!TextUtils.isEmpty(email) && TextUtils.isEmpty(password)){
+            Toast.makeText(MainActivity.this, "Please enter your password", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)){
+            progressDialog.setMessage("Signing in. Please wait...");
+            progressDialog.show();
+            firebaseAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            progressDialog.dismiss();
+                            if (task.isSuccessful()) {
+                                //we will start notes activity here
+                                finish();
+                                startActivity(new Intent(MainActivity.this, NotesActivity.class));
+                            } else {
+                                Toast.makeText(MainActivity.this, "Could not sign in. Please check your email and password.", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                });
+                    });
+        }
     }
 
     @Override

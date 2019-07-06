@@ -67,6 +67,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Already have an account"
+        android:layout_marginTop="10dp"
         android:textColor="#197ECE"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/linearlayout1"/>

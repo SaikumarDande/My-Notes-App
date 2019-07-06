@@ -4,7 +4,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -28,7 +27,6 @@ public class EditNoteActivity extends AppCompatActivity {
     private EditText inputNote;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference notesdatabase;
-    private String text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,23 +61,6 @@ public class EditNoteActivity extends AppCompatActivity {
         }
     }
 
-    /*private void retrieveNotes() {
-        notesdatabase.child(noteId).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Toast.makeText(EditNoteActivity.this, "Inside onDataChange", Toast.LENGTH_SHORT).show();
-                Log.d("Tag", "Inside datachange");
-                text = dataSnapshot.child("input_notes").getValue().toString().trim();
-                inputNote.setText(text);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }*/
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.edit_note_menu, menu);
@@ -98,9 +79,6 @@ public class EditNoteActivity extends AppCompatActivity {
         }
 
         if (id == android.R.id.home){
-            //if (text == inputNote.getText().toString()){
-              //  saveNote(text);
-            //}
             finish();
         }
         return super.onOptionsItemSelected(item);
